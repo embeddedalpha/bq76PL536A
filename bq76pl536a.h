@@ -44,7 +44,7 @@
 
 //REGISTERS
 
-#define DEVICE_STATUS	        0x00
+#define DEVICE_STATUS	      0x00
 #define GPAI_1                0x01
 #define GPAI_2                0x02
 #define VCELL1_1              0x03
@@ -94,20 +94,40 @@
 #define USER4                 0x4B
 
 
-void init_BQ76PL_H(SPI_TypeDef *SPI);
-void init_BQ76PL_N(SPI_TypeDef *SPI, uint8_t address);
-void init_BQ76PL_S(SPI_TypeDef *SPI, uint8_t address);
+void init_BQ76PL(SPI_TypeDef *SPI);
 
-void read_BQ76PL_H(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_addr, uint8_t count, uint8_t *buffer);
-void read_BQ76PL_N(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_addr, uint8_t count, uint8_t *buffer);
-void read_BQ76PL_S(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_addr, uint8_t count, uint8_t *buffer);
+void read_BQ76PL(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_addr, uint8_t count, uint8_t *buffer);
 
-void write_BQ76PL_H(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_adde, uint8_t data);
-void write_BQ76PL_N(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_adde, uint8_t data);
-void write_BQ76PL_S(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_adde, uint8_t data);
+void write_BQ76PL(SPI_TypeDef *SPI, uint8_t address, uint8_t reg_adde, uint8_t data);
 
+
+void broadcast_BQ76PL(SPI_TypeDef *SPI, uint8_t inst, uint8_t data);
+
+
+//Application
+
+//Device Address Discovery and Assignment
+//Returns the number of devices in the stack and assigns address to each one of them
+uint8_t assign_address_BQ76PL(SPI_TypeDef *SPI, uint8_t *address);
+
+uint16_t read_GPAI_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+
+uint16_t read_Cell_1_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Cell_2_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Cell_3_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Cell_4_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Cell_5_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Cell_6_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+
+
+uint16_t read_Temp_1_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+uint16_t read_Temp_2_BQ76PL(SPI_TypeDef *SPI, uint8_t address);
+
+//To be used within ISR and ALERT_H pin as Interrupt pin
+//This function gives the ID of cell which goes faulty.
+uint16_t COV_fault_cell(SPI_TypeDef *SPI);
+uint16_t CUV_fault_cell(SPI_TypeDef *SPI);
 
 
 
 #endif /* BQ76PL536A_BQ76PL536A_H_ */
-
